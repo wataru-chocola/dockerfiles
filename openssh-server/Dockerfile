@@ -4,6 +4,7 @@ RUN apt update && apt install -y --no-install-recommends \
     openssh-server \
     libpam-google-authenticator \
     sudo \
+    vim-tiny \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf /etc/ssh/sshd_config \
