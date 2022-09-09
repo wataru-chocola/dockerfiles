@@ -7,7 +7,7 @@ RUN apt update && apt install -y --no-install-recommends \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf /etc/ssh/sshd_config \
- && rm -rf /etc/ssh/ssh_host_*_keys*
+ && rm -rf /etc/ssh/ssh_host_*_key*
 
 RUN mkdir -p /run/sshd
 
@@ -17,6 +17,7 @@ RUN chmod 755 /init
 ADD rootfs/config/sshd_config /etc/ssh/sshd_config
 ADD rootfs/pam.d/sshd /etc/pam.d/sshd
 RUN mkdir -p /etc/ssh/hostkeys
+ADD rootfs/bin /usr/local/bin
 
 ADD rootfs/init.d /init.d
 
