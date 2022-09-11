@@ -7,7 +7,13 @@
 * Disable password authentication.
 * Prohibit root login.
 * Output logs to STDERR.
-* Installed commands: `vi`
+
+
+## Installed packages
+
+* `openssh-server`
+* `vi`
+* `sudo`
 
 ## Usage
 
@@ -33,7 +39,16 @@ $ docker run ... -e SSH_ADMINISTRATORS="john,blah" openssh-server:debian11
 Mount `/etc/ssh/sshd_config.d`.
 
 
-### Persist hostkeys
+### Use persisted home
+
+Mount `/home`.
+
+```
+$ docker run -p 2022:22 --mount=type=bind,src="$(pwd)"/homedir,dst=/homedir -d openssh-server:debian11
+```
+
+
+### Use persist hostkeys
 
 Mount `/etc/ssh/hostkeys`.
 
