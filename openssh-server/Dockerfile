@@ -17,15 +17,16 @@ RUN apt update && apt install -y --no-install-recommends \
 
 RUN mkdir -p /run/sshd
 
-ADD rootfs/init /init
+ADD data/init /init
 RUN chmod 755 /init
 
-ADD rootfs/config/sshd_config /etc/ssh/sshd_config
-ADD rootfs/pam.d/sshd /etc/pam.d/sshd
+ADD data/config/sshd_config /etc/ssh/sshd_config
+ADD data/config/pam.d/sshd /etc/pam.d/sshd
+ADD data/config/sudoers.d/sudo /etc/sudoers.d/sudo
 RUN mkdir -p /etc/ssh/hostkeys
-ADD rootfs/bin /usr/local/bin
 
-ADD rootfs/init.d /init.d
+ADD data/bin /usr/local/bin
+ADD data/init.d /init.d
 
 EXPOSE 22
 CMD ["/init"]

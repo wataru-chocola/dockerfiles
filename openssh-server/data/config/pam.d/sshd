@@ -1,9 +1,9 @@
 # PAM configuration for the Secure Shell service
 
 # auth only by pam-google-authenticator
-auth    requisite   pam_faillock.so preauth deny=4 even_deny_root fail_interval=1200 unlock_time=600
+auth    requisite   pam_faillock.so preauth deny=3 even_deny_root fail_interval=600 unlock_time=600
 auth    sufficient  pam_google_authenticator.so
-auth    [default=die]  pam_faillock.so authfail deny=4 even_deny_root fail_interval=1200 unlock_time=600
+auth    [default=die]  pam_faillock.so authfail deny=3 even_deny_root fail_interval=600 unlock_time=600
 auth    required    pam_deny.so
 
 # Clear failure records

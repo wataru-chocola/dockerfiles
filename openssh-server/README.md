@@ -62,3 +62,16 @@ Mount `/etc/ssh/hostkeys`.
 $ docker run ... --mount=type=bind,src="$(pwd)"/hostkeys,dst=/etc/ssh/hostkeys openssh-server:debian11
 ```
 
+## Logs
+
+Successful login makes a log message like:
+
+```
+Accepted keyboard-interactive/pam for john from 172.17.0.1 port 43044 ssh2
+```
+
+Failed login makes a log message, regardless of the reason, like:
+
+```
+Failed keyboard-interactive/pam for john from 172.17.0.1 port 43048 ssh2
+```
