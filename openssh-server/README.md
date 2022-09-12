@@ -21,17 +21,21 @@
 
 ### Managing users
 
-Add users from container.
+Add users in container.
 
-```
-$ docker exec -it <container_name> adduser <username>
+```console
+### from outside container
+$ docker exec -it <container_name> adduser.sh <username>
+
+### from inside container
+$ sudo adduser.sh <username>
 ```
 
 ### Sudoers
 
 Use `SSH_ADMINISTRATORS` environment varaible which contains admin users seperated by comma.
 
-```
+```console
 $ docker run ... -e SSH_ADMINISTRATORS="john,blah" openssh-server:debian11
 ```
 
@@ -45,16 +49,16 @@ Mount `/etc/ssh/sshd_config.d`.
 
 Mount `/home`.
 
-```
-$ docker run -p 2022:22 --mount=type=bind,src="$(pwd)"/homedir,dst=/homedir -d openssh-server:debian11
+```console
+$ docker run ... --mount=type=bind,src="$(pwd)"/homedir,dst=/home openssh-server:debian11
 ```
 
 
-### Use persist hostkeys
+### Use persisted hostkeys
 
 Mount `/etc/ssh/hostkeys`.
 
-```
-$ docker run -p 2022:22 --mount=type=bind,src="$(pwd)"/hostkeys,dst=/etc/ssh/hostkeys -d openssh-server:debian11
+```console
+$ docker run ... --mount=type=bind,src="$(pwd)"/hostkeys,dst=/etc/ssh/hostkeys openssh-server:debian11
 ```
 
