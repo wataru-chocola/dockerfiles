@@ -4,6 +4,7 @@
 
 * Enable OTP-based authentication.
 * Enable public key authentication.
+* Enable rate limiting.
 * Disable password authentication.
 * Prohibit root login.
 * Output logs to STDERR.
@@ -14,6 +15,7 @@
 * `openssh-server`
 * `vi`
 * `sudo`
+
 
 ## Usage
 

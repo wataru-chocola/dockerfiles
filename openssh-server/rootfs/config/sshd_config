@@ -13,6 +13,7 @@ AuthorizedKeysFile	.ssh/authorized_keys
 # for pam-google-authenticator
 ChallengeResponseAuthentication yes
 UsePAM yes
+MaxAuthTries 1
 
 # use publickey and pam
 AuthenticationMethods publickey,keyboard-interactive
