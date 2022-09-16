@@ -1,0 +1,30 @@
+name: Docker Publish on Repository Events
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  detect-changed-images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Detect changed images
+        id: detect_images
+        shell: bash
+        run: |
+          IMAGES="$(./.github/scripts/get-images.sh --changed)" || exit 1
+          echo "::set-output name=images::${IMAGES}"
+    outputs:
+      images: ${{ steps.detect_images.outputs.images }}
+  call-build-workflow:
+    needs: detect-changed-images
+    uses: ./.github/workflows/docker-publish.yml
+    with:
+      images: ${{ needs.detect-changed-images.outputs.images }}
+    if: needs.detect-changed-images.outputs.images != ''
