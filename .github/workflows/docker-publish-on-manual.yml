@@ -1,0 +1,17 @@
+name: Docker Publish on Manual
+
+on:
+  workflow_dispatch:
+    inputs:
+      images:
+        type: string
+        default: ''
+        required: true
+        description: a list of image names being built and published, seperated by comma
+
+jobs:
+  call-build-workflow:
+    needs: detect-changed-images
+    uses: ./.github/workflows/docker-publish.yml
+    with:
+      images: ${{ github.event.inputs.images }}
