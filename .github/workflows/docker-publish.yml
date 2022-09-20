@@ -4,9 +4,14 @@ on:
   workflow_call:
     inputs:
       images: 
-        description: a list of image names being built and published, seperated by comma
+        description: a list of image names to be built and published, seperated by comma
         type: string
-        required: true
+        required: false
+      no-cache:
+        description: don't use build cache
+        type: boolean
+        default: false
+        required: false
 
 env:
   REGISTRY: ghcr.io
@@ -91,3 +96,4 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha,scope=image-${{ matrix.target }}
           cache-to: type=gha,mode=max,scope=image-${{ matrix.target }}
+          no-cache: ${{ inputs.no-cache }}

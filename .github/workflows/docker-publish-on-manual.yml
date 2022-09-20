@@ -6,11 +6,17 @@ on:
       images:
         type: string
         default: ''
-        required: true
+        required: false
         description: a list of image names to be built and published, seperated by comma (empty means ALL)
+      no-cache:
+        description: don't use build cache
+        type: boolean
+        default: false
+        required: false
 
 jobs:
   call-build-workflow:
     uses: ./.github/workflows/docker-publish.yml
     with:
       images: ${{ github.event.inputs.images }}
+      no-cache: ${{ github.event.inputs.no-cache}}
