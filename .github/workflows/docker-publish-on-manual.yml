@@ -7,7 +7,7 @@ on:
         type: string
         default: ''
         required: true
-        description: a list of image names being built and published, seperated by comma
+        description: a list of image names to be built and published, seperated by comma (empty means ALL)
 
 jobs:
   call-build-workflow:
