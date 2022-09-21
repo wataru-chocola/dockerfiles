@@ -19,4 +19,5 @@ jobs:
     uses: ./.github/workflows/docker-publish.yml
     with:
       images: ${{ github.event.inputs.images }}
-      no-cache: ${{ fromJson(github.event.inputs.no-cache) }}
+      # workaround: https://github.com/actions/runner/issues/1483#issuecomment-1169313156
+      no-cache: ${{ inputs.no-cache == true }}
