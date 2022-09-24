@@ -29,10 +29,10 @@ do
     continue
   fi
 
-  image=$(basename ${subdir})
+  image=$(basename "${subdir}")
 
   if ${changed_only}; then
-    changes=$(git diff origin/main...${GITHUB_SHA} --relative="${subdir}" --name-only) || exit 1
+    changes=$(git diff origin/main..."${GITHUB_SHA}" --relative="${subdir}" --name-only) || exit 1
     if [ -z "$changes" ]; then
       continue
     fi
