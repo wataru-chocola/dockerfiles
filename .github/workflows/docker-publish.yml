@@ -32,7 +32,7 @@ jobs:
           else
             IMAGES="${{ inputs.images }}"
           fi
-          IFS=, IMAGE_ARRAY=(${IMAGES})
+          IFS=, read -r -a IMAGE_ARRAY <<< "$IMAGES"
           JSON_IMAGES=$(jq --compact-output --null-input '$ARGS.positional' --args -- "${IMAGE_ARRAY[@]}")
           echo "TARGET_MATRIX: ${JSON_IMAGES}"
           echo "::set-output name=images_matrix::${JSON_IMAGES}"
@@ -51,9 +51,9 @@ jobs:
     steps:
       - name: Checkout repository
         run: |
-          git clone --filter=blob:none --no-checkout --depth 1 --sparse https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git .
-          git sparse-checkout add ${{ matrix.target }}
-          git checkout ${GITHUB_SHA}
+          git clone --filter=blob:none --no-checkout --depth 1 --sparse "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git" .
+          git sparse-checkout add "${{ matrix.target }}"
+          git checkout "${GITHUB_SHA}"
 
       # Workaround: https://github.com/docker/build-push-action/issues/461
       - name: Setup Docker buildx
