@@ -78,6 +78,7 @@ jobs:
             if [[ ${VERSION} =~ ^([[:alnum:]]|[_])([[:alnum:]]|[-_.])*$ ]]
             then
               TAGS+=("${IMAGE}:${VERSION}")
+              TAGS+=("${IMAGE}:${VERSION}_${GITHUB_RUN_ID}")
             fi
           fi
           TAGSTR=$(IFS=,; echo "${TAGS[*]}")
