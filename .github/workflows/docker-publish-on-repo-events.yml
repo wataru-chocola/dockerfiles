@@ -3,6 +3,11 @@ name: Docker Publish on Repository Events
 on:
   pull_request:
     branches: [ "main" ]
+    types:
+      - "opened"
+      - "synchronize"
+      - "reopened"
+      - "closed"
 
 jobs:
   detect-changed-images:
