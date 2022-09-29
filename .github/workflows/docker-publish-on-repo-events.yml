@@ -1,8 +1,6 @@
 name: Docker Publish on Repository Events
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -18,7 +16,9 @@ jobs:
         id: detect_images
         shell: bash
         run: |
+          echo "SHA: ${GITHUB_SHA}"
           IMAGES="$(./.github/scripts/get-images.sh --changed)" || exit 1
+          echo "IMAGES: ${IMAGES}"
           echo "::set-output name=images::${IMAGES}"
     outputs:
       images: ${{ steps.detect_images.outputs.images }}
@@ -27,4 +27,5 @@ jobs:
     uses: ./.github/workflows/docker-publish.yml
     with:
       images: ${{ needs.detect-changed-images.outputs.images }}
+      push: ${{ github.event.pull_request.merged && github.event.action == 'closed' }}
     if: needs.detect-changed-images.outputs.images != ''
