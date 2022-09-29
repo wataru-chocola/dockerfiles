@@ -29,18 +29,17 @@ do
     continue
   fi
 
-  image=$(basename "${subdir}")
-
-  if ${changed_only}; then
-    changes=$(git diff origin/main..."${GITHUB_SHA}" --relative="${subdir}" --name-only) || exit 1
-    if [ -z "$changes" ]; then
-      continue
-    fi
-  fi
-
   if [ ! -f "${subdir}/Dockerfile" ]
   then
     continue
+  fi
+
+  image=$(basename "${subdir}")
+  if ${changed_only}; then
+    changes=$(git diff origin/main..."${GITHUB_SHA}" --relative="${image}" --name-only) || exit 1
+    if [ -z "$changes" ]; then
+      continue
+    fi
   fi
 
   # https://docs.docker.com/engine/reference/commandline/tag/

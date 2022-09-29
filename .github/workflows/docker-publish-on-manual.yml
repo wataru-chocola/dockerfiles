@@ -21,3 +21,4 @@ jobs:
       images: ${{ github.event.inputs.images }}
       # workaround: https://github.com/actions/runner/issues/1483#issuecomment-1169313156
       no-cache: ${{ inputs.no-cache == true }}
+      push: true
