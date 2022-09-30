@@ -3,25 +3,45 @@ name: Docker Publish on Repository Events
 on:
   pull_request:
     branches: [ "main" ]
-    types:
-      - "opened"
-      - "synchronize"
-      - "reopened"
-      - "closed"
+  push:
+    branches: [ "main" ]
 
 jobs:
   detect-changed-images:
     runs-on: ubuntu-latest
     steps:
+      - name: Set fetch depth
+        id: set_fetch_depth
+        env:
+          COMMITS: "${{ toJson(github.event.commits) }}"
+        run: |
+          declare -i depth
+          if [ "${{ github.event_name }}" = 'pull_request' ]; then
+            depth=0
+          elif [ "${{ github.event_name }}" = 'push' ]; then
+            numCommits=$(echo "$COMMITS" | jq '. | length')
+            depth=$(("$numCommits"+1))
+          fi
+          echo "$depth"
+          echo "::set-output name=fetch_depth::${depth}"
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: ${{ steps.set_fetch_depth.outputs.fetch_depth }}
       - name: Detect changed images
         id: detect_images
         shell: bash
+        env:
+          BEFORE_COMMIT: ${{ github.event.before }}
+          AFTER_COMMIT: ${{ github.event.after }}
         run: |
+          echo "EVENT: ${GITHUB_EVENT_NAME}"
           echo "SHA: ${GITHUB_SHA}"
+          echo "BASE BRANCH: ${GITHUB_BASE_REF}"
+          echo "HEAD BRANCH: ${GITHUB_HEAD_REF}"
+          echo "BEFORE COMMIT: ${BEFORE_COMMIT}"
+          echo "AFTER COMMIT: ${AFTER_COMMIT}"
+
           IMAGES="$(./.github/scripts/get-images.sh --changed)" || exit 1
           echo "IMAGES: ${IMAGES}"
           echo "::set-output name=images::${IMAGES}"
@@ -32,5 +52,5 @@ jobs:
     uses: ./.github/workflows/docker-publish.yml
     with:
       images: ${{ needs.detect-changed-images.outputs.images }}
-      push: ${{ github.event.pull_request.merged && github.event.action == 'closed' }}
+      push: ${{ github.event_name == 'push' }}
     if: needs.detect-changed-images.outputs.images != ''

@@ -36,7 +36,12 @@ do
 
   image=$(basename "${subdir}")
   if ${changed_only}; then
-    changes=$(git diff origin/main..."${GITHUB_SHA}" --relative="${image}" --name-only) || exit 1
+    declare changes
+    if [ "$GITHUB_EVENT_NAME" = 'pull_request' ]; then
+      changes=$(git diff origin/main..."${GITHUB_SHA}" --relative="${image}" --name-only) || exit 1
+    elif [ "$GITHUB_EVENT_NAME" = 'push' ]; then
+      changes=$(git diff "${BEFORE_COMMIT}" "${AFTER_COMMIT}" --relative="${image}" --name-only) || exit 1
+    fi
     if [ -z "$changes" ]; then
       continue
     fi
