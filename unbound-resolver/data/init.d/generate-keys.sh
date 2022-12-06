@@ -1,0 +1,1 @@
+[ -f /etc/unbound/unbound_server.key ] || /usr/sbin/unbound-control-setup
