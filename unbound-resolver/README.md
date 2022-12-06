@@ -2,11 +2,7 @@
 
 ## Default settings
 
-* Enable OTP-based authentication.
-* Enable public key authentication.
-* Enable rate limiting.
-* Disable password authentication.
-* Prohibit root login.
+* Set up DNS resolver.
 * Output logs to STDERR.
 
 
@@ -19,13 +15,13 @@
 
 Default config are devided into the following files:
 
-- [basic-settings.conf](./data/basic-settings.conf)
-- [logging.conf](./data/logging.conf)
-- [access-control.conf](./data/access-control.conf)
-- [security.conf](./data/security.conf)
-- [privacy.conf](./data/privacy.conf)
-- [performance.conf](./data/performance.conf)
-- [remote-control.conf](./data/remote-control.conf)
+- [basic-settings.conf](./data/configs/basic-settings.conf)
+- [logging.conf](./data/configs/logging.conf)
+- [access-control.conf](./data/configs/access-control.conf)
+- [security.conf](./data/configs/security.conf)
+- [privacy.conf](./data/configs/privacy.conf)
+- [performance.conf](./data/configs/performance.conf)
+- [remote-control.conf](./data/configs/remote-control.conf)
 
 ## Usage
 
