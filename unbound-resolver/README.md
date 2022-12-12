@@ -3,6 +3,7 @@
 ## Default settings
 
 * Set up DNS resolver.
+* Optimize performance settings based on system resources (procfs, cgroup, ...).
 * Output logs to STDERR.
 
 
@@ -25,6 +26,16 @@ Default config are devided into the following files:
 
 ## Usage
 
+### Optimize performance settings based on resources
+
+Use `OPTIMIZE_PERFORMANCE_SETTINGS` environment variable to adjust settings based on system resources.
+
+* See: [optimize_performance.sh](./data/init.d/optimize_performance.sh)
+
+```console
+$ docker run ... -e DYNAMIC_PERFORMANCE_CONFIG=1 unbound-resolver:debian11_1.0
+```
+
 ### Customize configuration
 
 Mount `/config` containing your config files.
@@ -33,5 +44,5 @@ Mount `/config` containing your config files.
 * Otherwise, a config file will be just included in unbound.conf.
 
 ```console
-$ docker run ... --mount=type=bind,src="$(pwd)"/configs,dst=/config unbound:debian11_1.0
+$ docker run ... --mount=type=bind,src="$(pwd)"/configs,dst=/config unbound-resolver:debian11_1.0
 ```
