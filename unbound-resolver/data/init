@@ -1,0 +1,12 @@
+#!/bin/bash
+
+for script in /init.d/* ; do
+  echo "Initializing $(basename ${script})"
+  bash $script
+  if [ $? -ne 0 ]; then
+    echo "FATAL: Failed to initialize"
+    exit 1
+  fi
+done
+
+exec /usr/sbin/unbound
