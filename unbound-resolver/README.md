@@ -3,7 +3,7 @@
 ## Default settings
 
 * Set up DNS resolver.
-* Optimize performance settings based on system resources (procfs, cgroup, ...).
+* Enable `unbound_control`.
 * Output logs to STDERR.
 
 
@@ -28,12 +28,12 @@ Default config are devided into the following files:
 
 ### Optimize performance settings based on resources
 
-Use `OPTIMIZE_PERFORMANCE_SETTINGS` environment variable to adjust settings based on system resources.
+Use `OPTIMIZE_PERFORMANCE_SETTINGS` environment variable to adjust settings based on system resources (procfs, cgroups).
 
 * See: [optimize_performance.sh](./data/init.d/optimize_performance.sh)
 
 ```console
-$ docker run ... -e DYNAMIC_PERFORMANCE_CONFIG=1 unbound-resolver:debian11_1.0
+$ docker run ... -e OPTIMIZE_PERFORMANCE_SETTINGS=1 unbound-resolver:debian11_1.0
 ```
 
 ### Customize configuration
@@ -44,5 +44,19 @@ Mount `/config` containing your config files.
 * Otherwise, a config file will be just included in unbound.conf.
 
 ```console
-$ docker run ... --mount=type=bind,src="$(pwd)"/configs,dst=/config unbound-resolver:debian11_1.0
+$ docker run ... --mount=type=bind,src="$(pwd)"/config,dst=/config unbound-resolver:debian11_1.0
+```
+
+### Use your control key
+
+If you want to manage server keys yourself, mount them:
+
+* `/etc/unbound/unbound_server.key`
+* `/etc/unbound/unbound_server.pem`
+
+```console
+$ docker run ... \
+    --mount=type=bind,src="$(pwd)"/keys/unbound_server.key,dst=/etc/unbound/unbound_sever.key \
+    --mount=type=bind,src="$(pwd)"/keys/unbound_server.pem,dst=/etc/unbound/unbound_sever.pem \
+    unbound-resolver:debian11_1.0
 ```
