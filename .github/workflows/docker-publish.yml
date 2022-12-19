@@ -40,7 +40,7 @@ jobs:
           IFS=, read -r -a IMAGE_ARRAY <<< "$IMAGES"
           JSON_IMAGES=$(jq --compact-output --null-input '$ARGS.positional' --args -- "${IMAGE_ARRAY[@]}")
           echo "TARGET_MATRIX: ${JSON_IMAGES}"
-          echo "::set-output name=images_matrix::${JSON_IMAGES}"
+          echo "images_matrix=${JSON_IMAGES}" >> "${GITHUB_OUTPUT}"
         shell: bash
     outputs:
       target_matrix: ${{ steps.set-matrix.outputs.images_matrix }}
@@ -88,7 +88,7 @@ jobs:
           fi
           TAGSTR=$(IFS=,; echo "${TAGS[*]}")
           echo "$TAGSTR"
-          echo "::set-output name=tags::${TAGSTR}"
+          echo "tags=${TAGSTR}" >> "${GITHUB_OUTPUT}"
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
