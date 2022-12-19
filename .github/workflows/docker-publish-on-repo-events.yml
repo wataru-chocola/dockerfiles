@@ -23,7 +23,7 @@ jobs:
             depth=$(("$numCommits"+1))
           fi
           echo "$depth"
-          echo "::set-output name=fetch_depth::${depth}"
+          echo "fetch_depth=${depth}" >> "${GITHUB_OUTPUT}"
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -44,7 +44,7 @@ jobs:
 
           IMAGES="$(./.github/scripts/get-images.sh --changed)" || exit 1
           echo "IMAGES: ${IMAGES}"
-          echo "::set-output name=images::${IMAGES}"
+          echo "images=${IMAGES}" >> "${GITHUB_OUTPUT}"
     outputs:
       images: ${{ steps.detect_images.outputs.images }}
   call-build-workflow:
