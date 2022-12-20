@@ -5,7 +5,9 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 
-RUN apt update && apt install -y --no-install-recommends unbound ca-certificates \
+RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
+    unbound \
+    ca-certificates \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
  && rm -f /etc/unbound/unbound_control.* \
