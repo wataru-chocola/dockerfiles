@@ -103,3 +103,4 @@ jobs:
           cache-from: type=gha,scope=image-${{ matrix.target }}
           cache-to: type=gha,mode=max,scope=image-${{ matrix.target }}
           no-cache: ${{ inputs.no-cache }}
+          pull: ${{ inputs.no-cache }}
