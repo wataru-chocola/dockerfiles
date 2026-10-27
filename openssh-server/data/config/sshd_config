@@ -11,7 +11,7 @@ PubkeyAuthentication yes
 AuthorizedKeysFile	.ssh/authorized_keys
 
 # for pam-google-authenticator
-ChallengeResponseAuthentication yes
+KbdInteractiveAuthentication yes
 UsePAM yes
 MaxAuthTries 1
 
