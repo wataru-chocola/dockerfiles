@@ -57,7 +57,7 @@ If you want to manage server keys yourself, mount them:
 
 ```console
 $ docker run ... \
-    --mount=type=bind,src="$(pwd)"/keys/unbound_server.key,dst=/etc/unbound/unbound_sever.key \
-    --mount=type=bind,src="$(pwd)"/keys/unbound_server.pem,dst=/etc/unbound/unbound_sever.pem \
+    --mount=type=bind,src="$(pwd)"/keys/unbound_server.key,dst=/etc/unbound/unbound_server.key \
+    --mount=type=bind,src="$(pwd)"/keys/unbound_server.pem,dst=/etc/unbound/unbound_server.pem \
     unbound-resolver:debian-13_1.0
 ```
