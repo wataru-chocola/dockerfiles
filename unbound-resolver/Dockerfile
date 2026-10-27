@@ -1,4 +1,4 @@
-FROM debian:11-slim
+FROM debian:13-slim
 
 ENV TINI_VERSION v0.19.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
@@ -7,6 +7,7 @@ ENTRYPOINT ["/tini", "--"]
 
 RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
     unbound \
+    dns-root-data \
     ca-certificates \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
