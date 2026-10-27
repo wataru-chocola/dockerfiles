@@ -83,7 +83,7 @@ function getLimitOfCpuCores() {
         cpu_max=$(cat "${CGROUP_V2_CPU_MAX_PATH}") || return 1
         IFS=" " read -r -a cpu_max_array <<<"${cpu_max}"
         if [ "${cpu_max_array[0]}" = "max" ]; then
-            numOfCpus=$(nproc) || return 1
+            numOfCores=$(nproc) || return 1
             echo -n "${numOfCores}"
             return 0
         fi
