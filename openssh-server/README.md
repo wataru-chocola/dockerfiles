@@ -36,7 +36,7 @@ $ sudo adduser.sh <username>
 Use `SSH_ADMINISTRATORS` environment varaible which contains admin users seperated by comma.
 
 ```console
-$ docker run ... -e SSH_ADMINISTRATORS="john,blah" openssh-server:debian11
+$ docker run ... -e SSH_ADMINISTRATORS="john,blah" openssh-server:debian-13_1.0
 ```
 
 
@@ -50,7 +50,7 @@ Mount `/etc/ssh/sshd_config.d`.
 Mount `/home`.
 
 ```console
-$ docker run ... --mount=type=bind,src="$(pwd)"/homedir,dst=/home openssh-server:debian11
+$ docker run ... --mount=type=bind,src="$(pwd)"/homedir,dst=/home openssh-server:debian-13_1.0
 ```
 
 
@@ -59,7 +59,7 @@ $ docker run ... --mount=type=bind,src="$(pwd)"/homedir,dst=/home openssh-server
 Mount `/etc/ssh/hostkeys`.
 
 ```console
-$ docker run ... --mount=type=bind,src="$(pwd)"/hostkeys,dst=/etc/ssh/hostkeys openssh-server:debian11
+$ docker run ... --mount=type=bind,src="$(pwd)"/hostkeys,dst=/etc/ssh/hostkeys openssh-server:debian-13_1.0
 ```
 
 ## Logs
