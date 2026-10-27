@@ -16,7 +16,7 @@ function addKey() {
 
     sudo -u "${USER}" sh -c "if [ ! -d ~/.ssh ]; then mkdir ~/.ssh && chmod 700 ~/.ssh; fi"
     [ $? -ne 0 ] && return 1
-    echo "${AUTHKEY}\n" | sudo -u "${USER}" sh -c "tee -a ~/.ssh/authorized_keys"
+    printf "%s\n" "${AUTHKEY}" | sudo -u "${USER}" sh -c "tee -a ~/.ssh/authorized_keys"
     return $?
 }
 
